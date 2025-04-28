@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "ESNext",               // This should be fine if you use ES modules
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "noEmit": false,                 // Ensure JavaScript files are emitted
+    "emitDeclarationOnly": false,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "allowJs": true
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules"]
+}

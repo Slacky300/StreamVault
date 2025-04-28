@@ -1,0 +1,70 @@
+{
+  "name": "streamvault",
+  "version": "1.0.0",
+  "description": "High-performance S3 download service",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "ts-node-dev --loader ts-node/esm --respawn src/index.ts",
+    "build": "tsc",
+    "worker": "node dist/workers/startWorkers.js",
+    "start": "node dist/index.js",
+    "dashboard": "node dist/dashboard/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Slacky300/StreamVault.git"
+  },
+  "keywords": [
+    "s3",
+    "aws",
+    "download",
+    "downloader",
+    "stream",
+    "streaming",
+    "file-transfer",
+    "cloud-storage",
+    "amazon-s3",
+    "aws-sdk",
+    "data-transfer",
+    "bucket",
+    "object-storage",
+    "nodejs",
+    "file-download",
+    "s3-client",
+    "cloud",
+    "storage",
+    "transfer"
+  ],
+  "author": "Slacky300",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Slacky300/StreamVault/issues"
+  },
+  "homepage": "https://github.com/Slacky300/StreamVault#readme",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.797.0",
+    "@aws-sdk/lib-storage": "^3.797.0",
+    "@aws-sdk/s3-request-presigner": "^3.797.0",
+    "@bull-board/api": "^6.9.2",
+    "@bull-board/express": "^6.9.2",
+    "archiver": "^7.0.1",
+    "axios": "^1.9.0",
+    "bullmq": "^5.51.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-basic-auth": "^1.2.1",
+    "ioredis": "^5.6.1",
+    "moment-timezone": "^0.5.48",
+    "p-limit": "^6.2.0"
+  },
+  "devDependencies": {
+    "@types/archiver": "^6.0.3",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.15.2",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.8.3"
+  }
+}
