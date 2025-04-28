@@ -12,8 +12,8 @@ class Config {
             type: 'exponential',
             delay: 1000,
         },
-        removeOnComplete: true,
-        removeOnFail: true,
+        removeOnComplete: { age: 3600, count: 10 }, 
+        removeOnFail: { age: 3600, count: 10 },   
     }
 
     readonly redis = {
