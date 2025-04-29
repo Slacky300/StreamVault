@@ -6,9 +6,35 @@
   <em>Mass Asset Retrieval Platform</em>
 </p>
 
+## Table of Contents
+- [Introduction](#introduction)
+- [Key Storage and Job Handling Features](#key-storage-and-job-handling-features)
+- [The Challenge](#the-challenge)
+- [StreamVault Solution Architecture](#streamvault-solution-architecture)
+- [Resource Requirements](#resource-requirements)
+- [Deployment Options](#deployment-options)
+- [Service Architecture](#service-architecture)
+- [Archive Delivery and Access](#archive-delivery-and-access)
+- [Configuration Reference](#configuration-reference)
+- [API Reference](#api-reference)
+- [Performance Benchmarks](#performance-benchmarks)
+- [Security Considerations](#security-considerations)
+- [Monitoring and Administration](#monitoring-and-administration)
+- [Screenshots](#screenshots)
+- [Contributing](#contributing)
+- [License](#license)
+- [Acknowledgements](#acknowledgements)
+
 ## Introduction
 
-StreamVault is an enterprise-ready solution designed to overcome a critical limitation in the AWS S3 ecosystem: the inability to efficiently download entire folder hierarchies containing numerous files. While AWS's own interface is optimized for individual file operations, StreamVault delivers a scalable, memory-efficient approach to bulk downloads through advanced queuing systems and streaming architecture.
+StreamVault is a high-performance S3 bulk downloader designed to overcome a critical limitation in the AWS S3 ecosystem: the inability to efficiently download entire folder hierarchies containing numerous files. While AWS's own interface is optimized for individual file operations, StreamVault delivers a scalable, memory-efficient approach to bulk downloads through advanced queuing systems and streaming architecture.
+
+## Key Storage and Job Handling Features
+
+- **S3-Based Archive Storage**: All generated ZIP archives are stored directly in your S3 bucket at the destination path configured in your `.env` file.
+- **Intelligent Job Caching**: If multiple users request the same folder, StreamVault returns the existing archive URL instead of regenerating the archive, improving efficiency and reducing processing overhead.
+- **Configurable Cache Expiry**: Job results are maintained for a configurable period (default: 1 hour) before being expired from the system.
+- **Resource-Efficient Processing**: By leveraging S3 for storage and Redis for job state management, the system maintains minimal local resource usage.
 
 ## The Challenge
 
@@ -35,8 +61,8 @@ StreamVault employs a sophisticated, microservices-based architecture to process
 
 | Feature               | Specification                                         |
 | --------------------- | ----------------------------------------------------- |
-| Maximum Download Size | Tested up to 500GB+ (theoretically unlimited)         |
-| File Count Capacity   | Successfully processed 100,000+ files in testing      |
+| Maximum Download Size | Tested up to 50GB (theoretically unlimited)           |
+| File Count Capacity   | Successfully processed 25,000+ files in testing       |
 | Memory Efficiency     | Constant memory usage regardless of download size     |
 | Throughput            | Limited primarily by network bandwidth                |
 | Concurrency           | Configurable parallel processing (default: 2 workers) |
@@ -47,7 +73,7 @@ StreamVault's resource consumption scales efficiently due to its streaming archi
 
 ### Recommended Specifications
 
-| Resource    | Minimum          | Recommended      | Enterprise       |
+| Resource    | Minimum          | Recommended      | Production       |
 | ----------- | ---------------- | ---------------- | ---------------- |
 | **CPU**     | 2 cores          | 4 cores          | 8+ cores         |
 | **RAM**     | 2GB              | 4GB              | 8GB+             |
@@ -172,6 +198,9 @@ AWS_S3_EXPORT_DESTINATION_PATH=your_export_path # S3 export path
 AWS_S3_GENERATE_PRESIGNED_URL=true # Generate pre-signed URLs for downloads
 AWS_S3_PRESIGNED_URL_EXPIRATION=3600 # Pre-signed URL expiration time in seconds
 
+# CORS Configuration
+CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173,http://localhost:8080 # CORS allowed origins
+
 # Dashboard Configuration
 ENABLE_DASHBOARD=true # Enable/disable the dashboard
 DASHBOARD_PORT=3001 # Dashboard port
@@ -186,9 +215,6 @@ LARGE_WORKER_CONCURRENCY=1 # Number of concurrent workers for large jobs
 DOWNLOAD_THRESHOLD_IN_GB=5      # Large/small queue threshold
 MAX_HEAP_USAGE_MB=512           # Memory pressure threshold
 JOB_ATTEMPTS=3                # Retry attempts for failed jobs
-
-
-
 ```
 
 ## API Reference
@@ -265,6 +291,15 @@ Response:
 *\*Processing times depend on network bandwidth and S3 throttling limits*  
 *\*\*Projected values based on small-to-large scale testing; not yet verified with actual 500GB+ workloads*
 
+### Testing Environment
+
+All benchmarks were conducted on an AWS t2.large instance with the following specifications:
+- **CPU**: 2 vCPUs
+- **RAM**: 8GB
+- **Network**: Up to 1Gbps (burst capacity)
+
+This demonstrates that StreamVault can handle substantial workloads even on moderately-sized infrastructure, making it suitable for teams with various resource constraints.
+
 ## Security Considerations
 
 - **AWS Credentials**: Least-privilege IAM roles recommended
@@ -318,6 +353,6 @@ This project is licensed under the ISC License - see the LICENSE file for detail
 
 ## Acknowledgements
 
-- BullMQ for enterprise-grade job queue management
+- BullMQ for robust job queue management
 - AWS SDK for JavaScript for S3 integration
 - Archiver for streaming ZIP creation
