@@ -29,6 +29,8 @@ class Config {
         accessKeyId: process.env.AWS_S3_ACCESS_KEY_ID || 'your-access-key-id',
         secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY || 'your-secret-access-key',
         exportDestinationPath: process.env.AWS_S3_EXPORT_DESTINATION_PATH || 'exports/',
+        generatePresignedUrl: process.env.AWS_S3_GENERATE_PRESIGNED_URL === 'true',
+        presignedUrlExpiration: parseInt(process.env.AWS_S3_PRESIGNED_URL_EXPIRATION || '3600'), // 1 hour
     };
 
     readonly database = {

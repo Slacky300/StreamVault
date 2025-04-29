@@ -75,6 +75,10 @@ class HelperFunctions {
         }, 30000);
     }
 
+    public extractKeyFromS3Url(s3Url: string): string {
+        return s3Url.split("amazonaws.com/")[1];
+    }
+
 }
 
 export default HelperFunctions;

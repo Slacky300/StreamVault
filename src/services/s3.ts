@@ -9,7 +9,7 @@ import MemoryManager from '../managers/memoryManager.js';
 import ArchiveManager from '../managers/archiveManager.js';
 import S3Uploader from '../managers/s3UploadManager.js';
 import pLimit from 'p-limit';
-import { stat } from 'fs';
+import { configStore } from '../config/config.js';
 
 class S3Service {
     private s3Client: S3Client;
@@ -17,6 +17,7 @@ class S3Service {
     private readonly helper = new HelperFunctions();
     private readonly MAX_CONCURRENT_OPERATIONS = 1;
     private readonly CHUNK_SIZE = 5;
+    private readonly config = configStore.getS3Config();
 
     constructor(region: string, bucketName: string, accessKeyId: string, secretAccessKey: string) {
         this.s3Client = new S3Client({
@@ -134,11 +135,19 @@ class S3Service {
             const s3URL = await uploadPromise;
             
             job.log(`[${job.id}] Export completed successfully. File available at s3://${this.bucketName}/${s3DestinationPath}`);
+
+            const generatePresignedUrl = this.config.generatePresignedUrl;
+            let presignedUrl: string | undefined = undefined;
+            if (generatePresignedUrl) {
+                const presignedUrlExpiration = this.config.presignedUrlExpiration;
+                presignedUrl = await this.generatePresignedUrl(this.helper.extractKeyFromS3Url(s3URL), presignedUrlExpiration);
+                job.log(`[${job.id}] Presigned URL generated: ${presignedUrl}`);
+            }
             
 
 
             const result = {
-                downloadUrl: s3URL,
+                downloadUrl: generatePresignedUrl ? presignedUrl || '' : s3URL,
                 status: "completed",
                 totalSize: folderInfo.totalSize,
                 noOfFiles: folderInfo.noOfFiles,

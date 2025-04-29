@@ -169,6 +169,8 @@ AWS_ACCESS_KEY_ID=your_key # AWS credentials
 AWS_SECRET_ACCESS_KEY=your_secret # AWS credentials
 AWS_BUCKET_NAME=your_bucket_name # S3 bucket name
 AWS_S3_EXPORT_DESTINATION_PATH=your_export_path # S3 export path
+AWS_S3_GENERATE_PRESIGNED_URL=true # Generate pre-signed URLs for downloads
+AWS_S3_PRESIGNED_URL_EXPIRATION=3600 # Pre-signed URL expiration time in seconds
 
 # Dashboard Configuration
 ENABLE_DASHBOARD=true # Enable/disable the dashboard
@@ -184,6 +186,8 @@ LARGE_WORKER_CONCURRENCY=1 # Number of concurrent workers for large jobs
 DOWNLOAD_THRESHOLD_IN_GB=5      # Large/small queue threshold
 MAX_HEAP_USAGE_MB=512           # Memory pressure threshold
 JOB_ATTEMPTS=3                # Retry attempts for failed jobs
+
+
 
 ```
 
