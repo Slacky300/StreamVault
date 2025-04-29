@@ -27,7 +27,7 @@ class JobController {
 
       const {humanReadableSize: sizeOfFolder} = await this.s3Client.getTotalSizeOfObjects(s3Key);
       const sizeToCompareWithThreshold = this.helperFunctions.getSizeInGB(sizeOfFolder);
-      const jobId = this.helperFunctions.generateJobId(s3Key, true);
+      const jobId = this.helperFunctions.generateJobId(s3Key, sizeToCompareWithThreshold > this.DOWNLOAD_THRESHOLD_IN_GB);
 
       const jobData = {
         s3Key,

@@ -27,7 +27,7 @@ class S3Uploader {
         if (s3Key.startsWith('/')) {
             s3Key = s3Key.slice(1);
         }
-        const sanitizedKey = `exports/${s3Key}`.replace(/[^a-zA-Z0-9_\-\/\.]/g, '-');
+        const sanitizedKey = `exports/${s3Key}.zip`.replace(/[^a-zA-Z0-9_\-\/\.]/g, '-');
 
         const upload = new Upload({
             client: this.s3Client,
