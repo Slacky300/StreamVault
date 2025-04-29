@@ -74,7 +74,7 @@ StreamVault implements advanced memory safeguards:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/StreamVault.git
+git clone https://github.com/Slacky300/StreamVault.git
 cd StreamVault
 
 # Configure environment variables
