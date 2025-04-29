@@ -209,13 +209,13 @@ Request body:
 Response:
 ```json
 {
-  "message": "Large download job created successfully",
-  "s3Key": "path/to/s3/folder",
-  "sizeOfFolder": 16492674825,
-  "thresholdValueInGB": 5,
-  "createdAt": "2025-04-29T12:34:56Z",
-  "jobId": "job_14a72b9e3d",
-  "isLargeDownload": true
+  "message": "Small download job created successfully",
+  "s3Key": "__outputs/",
+  "sizeOfFolder": "320.40 MB",
+  "thresholdValueInGB": 10,
+  "createdAt": "04/29/2025 01:54:21 PM",
+  "jobId": "__outputs_-small",
+  "isLargeDownload": false
 }
 ```
 
@@ -255,14 +255,15 @@ Response:
 
 ## Performance Benchmarks
 
-| Scenario            | Files    | Total Size | Processing Time* | Peak Memory |
-| ------------------- | -------- | ---------- | ---------------- | ----------- |
-| Small Archive       | 100      | 500MB      | 45s              | 220MB       |
-| Medium Archive      | 1,000    | 5GB        | 8m 20s           | 340MB       |
-| Large Archive       | 25,000   | 50GB       | 1h 45m           | 480MB       |
-| Enterprise Scenario | 100,000+ | 500GB+     | ~18h             | 510MB       |
+| Scenario           | Files    | Total Size | Processing Time* | Peak Memory | Testing Status   |
+| ------------------ | -------- | ---------- | ---------------- | ----------- | ---------------- |
+| Small Archive      | 100      | 500MB      | 45s              | 220MB       | ✓ Tested         |
+| Medium Archive     | 1,000    | 5GB        | 8m 20s           | 340MB       | ✓ Tested         |
+| Large Archive      | 25,000   | 50GB       | 1h 45m           | 480MB       | ✓ Tested         |
+| Enterprise Scenario| 100,000+ | 500GB+     | ~18h**           | 510MB**     | ⚠️ Projected     |
 
-*\*Processing times depend on network bandwidth and S3 throttling limits*
+*\*Processing times depend on network bandwidth and S3 throttling limits*  
+*\*\*Projected values based on small-to-large scale testing; not yet verified with actual 500GB+ workloads*
 
 ## Security Considerations
 

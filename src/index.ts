@@ -2,17 +2,19 @@ import express, {Express} from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import JobController from './controllers/job.js';
+import { configStore } from './config/config.js';
 dotenv.config();
 
 const app : Express = express();
 const port: number = parseInt(process.env.PORT || '5000', 10);
 
 const jobController = new JobController();
+const allowedOrigins = configStore.getAllowedCorsOrigins();
 
 app.use(express.json());
 app.use(cors(
     {
-        origin: '*',
+        origin: allowedOrigins,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization'],
     }

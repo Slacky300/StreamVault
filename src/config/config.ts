@@ -5,6 +5,7 @@ dotenv.config();
 
 class Config {
 
+    readonly allowedCorsOrigins = process.env.ALLOWED_CORS_ORIGINS?.split(',') || ['http://localhost:3000'];
 
     readonly jobOptionsForQueues = {
         attempts: parseInt(process.env.JOB_ATTEMPTS || '3'),
@@ -52,6 +53,10 @@ class Config {
 
     public getJobOptionsForQueues() {
         return this.jobOptionsForQueues;
+    }
+
+    public getAllowedCorsOrigins() {
+        return this.allowedCorsOrigins;
     }
 }
 
