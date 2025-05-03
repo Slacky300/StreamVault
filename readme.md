@@ -137,18 +137,7 @@ npm run dashboard   # Admin Dashboard (optional)
 ## Service Architecture
 
 StreamVault implements a robust microservices architecture:
-
-```
-┌─────────────┐     ┌─────────────┐      ┌──────────────┐
-│  API Server │────▶ |Redis Queue │◀───▶│ Worker Nodes │
-└─────────────┘      └─────────────┘     └──────────────┘
-       │                                       │
-       ▼                                       ▼
-┌─────────────┐                         ┌──────────────┐
-│ Monitoring  │                         │ AWS S3       │
-│ Dashboard   │                         │ Service      │
-└─────────────┘                         └──────────────┘
-```
+[View on Eraser![](https://build007-images.s3.ap-south-1.amazonaws.com/assets/StreamVaultArchitecture.png)](https://app.eraser.io/workspace/Z1HLzl6VG5pxSb6LH3ou?elements=JUdlAgDWmEcFFwAC7fCAiQ)
 
 ### Component Roles
 
